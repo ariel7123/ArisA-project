@@ -1,0 +1,210 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  color: black;
+  letter-spacing: 0;
+  --primary-color: rgb(247, 247, 247);
+  --secondary-color: rgb(23, 58, 120);
+  --third-color: rgb(0, 0, 0);
+}
+
+:root {
+  font-size: 16px;
+  /* 1rem = 16px */
+  /* 
+  margin: 2rem;  = 32px
+  padding: 1.5rem; = 24px
+  font-size: 0.875rem;  = 14px
+  */
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  cursor: pointer;
+}
+
+li:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+body {
+  background-color: var(--primary-color);
+}
+
+.mystyle {
+  color: #467cd2;
+}
+
+.subBtn {
+  border: none;
+  background-color: #d6e2f5;
+  color: #467cd2;
+}
+.subBtn:hover {
+  background-color: #173a78;
+  color: white;
+}
+
+.navBar {
+  display: flex;
+  margin: auto;
+  align-content: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+.navBar__item {
+  margin: 0 2.5rem;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.5s ease-in-out;
+  font-weight: bold;
+}
+.navBar__item .fa-waze {
+  font-size: 1.2rem;
+  color: #33ccff;
+}
+.navBar__item .fa-circle-info {
+  font-size: 1.2rem;
+  color: chocolate;
+}
+.navBar__item .fa-envelope {
+  font-size: 1.2;
+  color: darkblue;
+}
+.navBar__item:hover {
+  text-decoration: none;
+  transform: scale(1.2);
+}
+.navBar__item::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) scaleX(0);
+  width: 110%;
+  height: 4px;
+  background-color: #173a78;
+  border-radius: 2px;
+  transition: transform 0.5s ease-in-out;
+  transform-origin: center;
+}
+.navBar__item:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+.navBar__logo {
+  background-image: url("../../img/logoCompany.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+}
+.navBar__flexSeperator {
+  display: flex;
+  justify-content: space-between;
+}
+.navBar__flexSeperator--left {
+  display: flex;
+  align-content: center;
+}
+.navBar__flexSeperator--right {
+  display: flex;
+  align-items: center;
+}
+.navBar__flexSeperator--right .form-inline {
+  display: flex;
+}
+.navBar__flexSeperator--right .form-inline .textField {
+  width: 15rem;
+  height: 2.5rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  margin-right: 1.5rem;
+}
+.navBar__flexSeperator--right .form-inline .searchBtn {
+  margin-right: 1rem;
+  background-color: #d6e2f5;
+  color: #467cd2;
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out;
+  background-color: 0.3s, color 0.3s;
+}
+.navBar__flexSeperator--right .form-inline .searchBtn:hover {
+  transform: scale(1.2);
+  background-color: #173a78;
+  color: white;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 75%;
+  max-height: 75vh;
+  margin: auto;
+}
+.cardContainer__item {
+  flex: 0 0 250px;
+  max-width: 100%;
+}
+.cardContainer__item img {
+  height: 25vh;
+}
+.cardContainer__item .p-descripttion {
+  font-size: 0.7rem;
+}
+.cardContainer__item .fa-file-lines {
+  font-size: 1.1rem;
+  color: #1e90ff;
+}
+.cardContainer__item .fa-dollar-sign, .cardContainer__item .fa-check-circle {
+  font-size: 1.2rem;
+  color: green;
+}
+
+.adminPanel {
+  position: fixed;
+  bottom: -16px;
+  left: 0;
+  width: 100%;
+}
+.adminPanel__form {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
