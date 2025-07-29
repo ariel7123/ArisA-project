@@ -84,6 +84,7 @@ function htmlItem(item: Product): string {
 //   }
 // }
 
+// Moudle - rearrange the data
 function renderItems(): void {
   try {
     const itemRoot = document.getElementById("itemRoot");
@@ -91,15 +92,20 @@ function renderItems(): void {
 
     itemRoot.innerHTML = products.map(htmlItem).join("");
   } catch (error) {
-    console.log("there is nothing to render", error);
+    console.error("there is nothing to render", error);
   }
 }
 
+// Control - but here we use addEvenetListner insted create event in the HTML file
+
 const form = document.getElementById("adminPanel__form") as HTMLFormElement;
+
 form.addEventListener("submit", (event: SubmitEvent) => {
   event.preventDefault();
   console.log("submit pressed");
+  
   const formData = new FormData(form);
+  
   const itemToAdd: Product = {
     url: formData.get("photourl") as string,
     title: formData.get("title") as string,
@@ -107,13 +113,14 @@ form.addEventListener("submit", (event: SubmitEvent) => {
     price: parseInt(formData.get("price") as string),
     stock: parseInt(formData.get("stock") as string),
   };
-  // if (itemToAdd.stock == 0) {
-  //   itemToAdd.stock = "out of stock";
-  // }
-  // if(itemToAdd.price == 0 || isNaN(itemToAdd.price)){
-  //   alert("the price is not valid")
-  //   return;
-  // }
+
+  if (itemToAdd.stock == 0) {
+    itemToAdd.stock = "out of stock";
+  }
+  if(itemToAdd.price == 0 || isNaN(itemToAdd.price)){
+    alert("the price is not valid")
+    return;
+  }
   products.push(itemToAdd);
   console.log(products);
   // console.log(itemToAdd.price)

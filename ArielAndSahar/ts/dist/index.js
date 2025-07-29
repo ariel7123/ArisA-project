@@ -48,6 +48,7 @@ function htmlItem(item) {
 //     console.log("there is nothis to render", error);
 //   }
 // }
+// Moudle - rearrange the data
 function renderItems() {
     try {
         var itemRoot = document.getElementById("itemRoot");
@@ -56,9 +57,10 @@ function renderItems() {
         itemRoot.innerHTML = products.map(htmlItem).join("");
     }
     catch (error) {
-        console.log("there is nothing to render", error);
+        console.error("there is nothing to render", error);
     }
 }
+// Control - but here we use addEvenetListner insted create event in the HTML file
 var form = document.getElementById("adminPanel__form");
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -71,13 +73,13 @@ form.addEventListener("submit", function (event) {
         price: parseInt(formData.get("price")),
         stock: parseInt(formData.get("stock"))
     };
-    // if (itemToAdd.stock == 0) {
-    //   itemToAdd.stock = "out of stock";
-    // }
-    // if(itemToAdd.price == 0 || isNaN(itemToAdd.price)){
-    //   alert("the price is not valid")
-    //   return;
-    // }
+    if (itemToAdd.stock == 0) {
+        itemToAdd.stock = "out of stock";
+    }
+    if (itemToAdd.price == 0 || isNaN(itemToAdd.price)) {
+        alert("the price is not valid");
+        return;
+    }
     products.push(itemToAdd);
     console.log(products);
     // console.log(itemToAdd.price)
