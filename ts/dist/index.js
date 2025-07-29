@@ -31,7 +31,7 @@ var products = [
 //view func
 function htmlItem(item) {
     {
-        return "\n      <div class=\"card cardContainer__item\">\n        <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n        <i class=\"fa-solid fa-trash\"></i>\n        </button>\n      <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
+        return "\n      <div class=\"card cardContainer__item\">\n        <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n        <i class=\"fa-solid fa-trash\"></i>\n        </button>\n        <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
             ? "fa-times-circle text-danger"
             : "fa-check-circle text-success") + "\"></i>In stock :" + item.stock + "</p>\n      </div>\n    </div>\n    ";
     }
@@ -101,5 +101,27 @@ function addDeleteListeners() {
         });
     });
 }
+////////////////////////////////
+//     Theme btn function     //
+////////////////////////////////
+document.addEventListener("DOMContentLoaded", function () {
+    var themeToggleBtn = document.getElementById("themeToggleBtn");
+    var body = document.body;
+    if (localStorage.getItem("theme") === "dark") {
+        body.classList.toggle("dark-theme");
+        (themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.firstElementChild).className = "fa-solid fa-sun";
+    }
+    themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.addEventListener("click", function () {
+        body.classList.toggle("dark-theme");
+        if (body.classList.contains("dark-theme")) {
+            themeToggleBtn.firstElementChild.className = "fa-solid fa-sun";
+            localStorage.setItem("theme", "dark");
+        }
+        else {
+            themeToggleBtn.firstElementChild.className = "fa-solid fa-moon";
+            localStorage.setItem("theme", "light");
+        }
+    });
+});
 // Allwayes call the render!
 renderItems();

@@ -53,7 +53,7 @@ function htmlItem(item: Product): string {
         <button class="btn btn-danger btn-sm deleteCardBtn" style="position:absolute; right:0.5rem; top:0.5rem;">
         <i class="fa-solid fa-trash"></i>
         </button>
-      <img src=${item.url} class="card-img-top" alt="..."
+        <img src=${item.url} class="card-img-top" alt="..."
         id="cardContainerItemImgUrl">
       <div class="card-body">
       <p class="card-text" id="cardContainerItemText">${item.title}</p>
@@ -151,13 +151,31 @@ function addDeleteListeners() {
   });
 }
 
+////////////////////////////////
+//     Theme btn function     //
+////////////////////////////////
 
+document.addEventListener("DOMContentLoaded", () =>{
+  const themeToggleBtn = document.getElementById("themeToggleBtn")
+  const body = document.body
 
+  if (localStorage.getItem("theme") === "dark"){
+    body.classList.toggle("dark-theme");
+    (themeToggleBtn?.firstElementChild as HTMLElement).className = "fa-solid fa-sun";
+  }
 
+  themeToggleBtn?.addEventListener("click", () => {
+    body.classList.toggle("dark-theme")
 
-
-
-
+    if (body.classList.contains("dark-theme")) {
+      (themeToggleBtn.firstElementChild as HTMLElement).className = "fa-solid fa-sun"
+      localStorage.setItem("theme", "dark")
+    } else {
+      (themeToggleBtn.firstElementChild as HTMLElement).className = "fa-solid fa-moon"
+      localStorage.setItem("theme", "light")
+    }
+  })
+})
 
 
 
