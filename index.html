@@ -9,6 +9,8 @@
   <!-- Scripts files -->
   <script src="./ts/dist/index.js" defer></script>
   <script src="./ts/dist/cardRemover.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <!-- Bootstrp link -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,8 +24,63 @@
     integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
- 
+
 <body>
+  <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">edit</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="editForm">
+        <div class="modal-body">
+            <div class="input-group input-group-sm mb-3">
+              <label class="input-group-text adminPanel__form--photo" id="inputGroup-sizing-sm">photo url</label>
+              <input type="text" class="form-control" aria-label="Sizing example input" name="photourl" id="inputUrl"
+                aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+
+              <span class="input-group-text adminPanel__form--title" id="inputGroup-sizing-sm">title</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" name="title" id="inputTitle"
+                aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+
+              <span class="input-group-text adminPanel__form--discreption" id="inputGroup-sizing-sm">discreption</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" name="discreption"
+                id="inputDesc" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+
+              <span class="input-group-text adminPanel__form--price" id="inputGroup-sizing-sm">price</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" name="price" id="inputPrice"
+                aria-describedby="inputGroup-sizing-sm">
+              <span class="input-group-text">$</span>
+            </div>
+            <div class="input-group input-group-sm mb-3">
+
+              <span class="input-group-text" id="inputGroup-sizing-sm">stock</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" name="stock" id="inputStock"
+                aria-describedby="inputGroup-sizing-sm">
+              <input type="hidden" id="editIndex" name="index">
+            </div>
+            <!-- <button type="submit" class="btn btn-primary subBtn">Submit</button> -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  </div>
 
   <nav class="navbar-expand-lg bg-body-tertiary ">
     <div class="navBar container-fluid">
@@ -67,7 +124,7 @@
     </div>
 
   </nav>
-<!-- Main products -->
+  <!-- Main products -->
   <div class="cardContainer" id="itemRoot">
 
   </div>
