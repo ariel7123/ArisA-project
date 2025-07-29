@@ -1,3 +1,4 @@
+
 .navBar {
   display: flex;
   margin:  auto;
@@ -108,6 +109,10 @@
             color: $btn-color-text-hover;
           }
         }
+      }
+
+      .themeToggleBtn{
+        margin-right: 1.5rem;
       }
     }
   }
