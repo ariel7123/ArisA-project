@@ -31,7 +31,7 @@ var products = [
 //view func
 function htmlItem(item) {
     {
-        return "\n      <div class=\"card cardContainer__item\">\n      <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
+        return "\n      <div class=\"card cardContainer__item\">\n        <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n        <i class=\"fa-solid fa-trash\"></i>\n        </button>\n      <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
             ? "fa-times-circle text-danger"
             : "fa-check-circle text-success") + "\"></i>In stock :" + item.stock + "</p>\n      </div>\n    </div>\n    ";
     }
@@ -55,6 +55,7 @@ function renderItems() {
         if (!itemRoot)
             throw new Error("there is nothing to render");
         itemRoot.innerHTML = products.map(htmlItem).join("");
+        addDeleteListeners();
     }
     catch (error) {
         console.error("there is nothing to render", error);
@@ -86,4 +87,19 @@ form.addEventListener("submit", function (event) {
     renderItems();
     form.reset();
 });
+////////////////////////////////
+//     delete btn function    //
+////////////////////////////////
+// delete btn control
+function addDeleteListeners() {
+    var deleteButtons = document.querySelectorAll(".deleteCardBtn");
+    deleteButtons.forEach(function (btn, idx) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            products.splice(idx, 1);
+            renderItems();
+        });
+    });
+}
+// Allwayes call the render!
 renderItems();
