@@ -28,8 +28,8 @@ const products: Product[] = [
     url: "https://img.ksp.co.il/item/283148/b_1.jpg?v=1699817655",
     title: "Samsung Galaxy Watch6 Classic 47mm",
     discreption: `Processor: Exynos W930 (Dualcore, 5nm) 1.4GHz,
-          Storage & Capcity: 2.0GB RAM + 16GB,
-          Connectivity: BT 5.3/ Wi-Fi 2.4GHz & 5GHz / GPS / NFC`,
+    Storage & Capcity: 2.0GB RAM + 16GB,
+    Connectivity: BT 5.3/ Wi-Fi 2.4GHz & 5GHz / GPS / NFC`,
     price: 254,
     stock: 12,
   },
@@ -37,7 +37,7 @@ const products: Product[] = [
     url: "https://img.ksp.co.il/item/134985/b_1.jpg?v=1613399698",
     title: "2024 Legion Tower 7i Gen 8",
     discreption: `Thomas Kosmela No. 4 - (Afra L'Amour) -
-          A scent of aromatic spices and amber.
+    A scent of aromatic spices and amber.
           The perfume has an innovative, airy and sweet scent profile with exceptional environmental effects and
           long-lasting and long-lasting radiation.`,
     price: 86,
@@ -49,20 +49,20 @@ const products: Product[] = [
 function htmlItem(item: Product, index: number): string {
   {
     return `
-      <div class="card cardContainer__item">
-        <button class="btn btn-danger btn-sm deleteCardBtn" style="position:absolute; right:0.5rem; top:0.5rem;">
-
-        <i class="fa-solid fa-trash"></i>
-        </button>
-        <button onclick="handleEdit(${index})" type="button" class="btn btn-primary btn-sm editCardBtn"  
-        style="position:absolute; 
-        right:3rem; top:0.5rem;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#exampleModal">
-        <i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
-        </button>
-      <img src=${item.url} class="card-img-top" alt="..."
-        id="cardContainerItemImgUrl">
+    <div class="card cardContainer__item">
+    <button class="btn btn-danger btn-sm deleteCardBtn" style="position:absolute; right:0.5rem; top:0.5rem;">
+    
+    <i class="fa-solid fa-trash"></i>
+    </button>
+    <button onclick="handleEdit(${index})" type="button" class="btn btn-primary btn-sm editCardBtn"  
+    style="position:absolute; 
+    right:3rem; top:0.5rem;" 
+    data-bs-toggle="modal" 
+    data-bs-target="#exampleModal">
+    <i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
+    </button>
+    <img src=${item.url} class="card-img-top" alt="..."
+    id="cardContainerItemImgUrl">
       <div class="card-body">
       <p class="card-text" id="cardContainerItemText">${item.title}</p>
       <p class="card-text p-descripttion" id="cardContainerItemdiscreption">
@@ -96,14 +96,27 @@ function htmlItem(item: Product, index: number): string {
 // }
 
 // Moudle - rearrange the data
+let isSorted: boolean = false;
+let isSortedStock: boolean = false;
+
+const sortedArry = [...products];
 function renderItems(): void {
   try {
     const itemRoot = document.getElementById("itemRoot");
     if (!itemRoot) throw new Error("there is nothing to render");
-
-    itemRoot.innerHTML = products
-      .map((item, index) => htmlItem(item, index))
-      .join("");
+    if (isSorted == true) {
+      itemRoot.innerHTML = sortedArry
+        .map((item, index) => htmlItem(item, index))
+        .join("");
+    } else if (isSortedStock == true) {
+      itemRoot.innerHTML = sortedArry
+        .map((item, index) => htmlItem(item, index))
+        .join("");
+    } else {
+      itemRoot.innerHTML = products
+        .map((item, index) => htmlItem(item, index))
+        .join("");
+    }
 
     addDeleteListeners();
   } catch (error) {
@@ -172,12 +185,9 @@ edit.addEventListener("submit", (event: SubmitEvent) => {
     price: parseInt(editData.get("price") as string),
     stock: parseInt(editData.get("stock") as string),
   };
-  console.log("itemToEdit")
+  console.log("itemToEdit");
   products[index] = itemToEdit;
   renderItems();
-  
-  
-
 });
 
 function handleEdit(index: number): void {
@@ -196,37 +206,51 @@ function handleEdit(index: number): void {
   (document.getElementById("editIndex") as HTMLInputElement).value =
     index.toString();
 }
-    
-  });
-}
 
 ////////////////////////////////
 //     Theme btn function     //
 ////////////////////////////////
 
-document.addEventListener("DOMContentLoaded", () =>{
-  const themeToggleBtn = document.getElementById("themeToggleBtn")
-  const body = document.body
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
+  const body = document.body;
 
-  if (localStorage.getItem("theme") === "dark"){
+  if (localStorage.getItem("theme") === "dark") {
     body.classList.toggle("dark-theme");
-    (themeToggleBtn?.firstElementChild as HTMLElement).className = "fa-solid fa-sun";
+    (themeToggleBtn?.firstElementChild as HTMLElement).className =
+      "fa-solid fa-sun";
   }
 
   themeToggleBtn?.addEventListener("click", () => {
-    body.classList.toggle("dark-theme")
+    body.classList.toggle("dark-theme");
 
     if (body.classList.contains("dark-theme")) {
-      (themeToggleBtn.firstElementChild as HTMLElement).className = "fa-solid fa-sun"
-      localStorage.setItem("theme", "dark")
+      (themeToggleBtn.firstElementChild as HTMLElement).className =
+        "fa-solid fa-sun";
+      localStorage.setItem("theme", "dark");
     } else {
-      (themeToggleBtn.firstElementChild as HTMLElement).className = "fa-solid fa-moon"
-      localStorage.setItem("theme", "light")
+      (themeToggleBtn.firstElementChild as HTMLElement).className =
+        "fa-solid fa-moon";
+      localStorage.setItem("theme", "light");
     }
-  })
-})
+  });
+});
 
+// sort by price
+function handleSortByPrice() {
+  sortedArry.sort((a, b) => a.price - b.price);
+  console.log(sortedArry);
+  isSorted = true;
+  renderItems();
+}
+// sort by stock
 
+function handleSortByStock() {
+  sortedArry.sort((a, b) => a.stock - b.stock);
+  console.log(sortedArry);
+  isSortedStock = true;
+  renderItems();
+}
 
 // Allwayes call the render!
 renderItems();

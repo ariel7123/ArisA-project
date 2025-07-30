@@ -37,7 +37,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="editForm">
-        <div class="modal-body">
+          <div class="modal-body">
             <div class="input-group input-group-sm mb-3">
               <label class="input-group-text adminPanel__form--photo" id="inputGroup-sizing-sm">photo url</label>
               <input type="text" class="form-control" aria-label="Sizing example input" name="photourl" id="inputUrl"
@@ -71,12 +71,12 @@
             </div>
             <!-- <button type="submit" class="btn btn-primary subBtn">Submit</button> -->
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -125,9 +125,19 @@
         <button id="themeToggleBtn" class="btn btn-outline-secondary ms-2 themeToggleBtn" title="Switch Theme">
           <i class="fa-solid fa-moon"></i>
         </button>
+
+        <button id="sortByPrice" class="btn btn-outline-secondary ms-2 themeToggleBtn" title="Price Sort"
+          onclick="handleSortByPrice()">
+          <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+        </button>
+        <button id="sortByStock" class="btn btn-outline-secondary ms-2 themeToggleBtn" title="Stock Sort"
+          onclick="handleSortByStock()">
+          <i class="fa fa-sort-amount-desc" aria-hidden="true"></i>
+        </button>
       </div>
 
     </div>
+
 
   </nav>
   <!-- Main products -->

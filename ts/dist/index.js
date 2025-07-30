@@ -1,3 +1,10 @@
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var products = [
     {
         url: "https://i.pcmag.com/imagery/roundups/06o6G8AsNkTfU4iPG42UXTV-66.fit_lim.size_1050x.jpg",
@@ -16,14 +23,14 @@ var products = [
     {
         url: "https://img.ksp.co.il/item/283148/b_1.jpg?v=1699817655",
         title: "Samsung Galaxy Watch6 Classic 47mm",
-        discreption: "Processor: Exynos W930 (Dualcore, 5nm) 1.4GHz,\n          Storage & Capcity: 2.0GB RAM + 16GB,\n          Connectivity: BT 5.3/ Wi-Fi 2.4GHz & 5GHz / GPS / NFC",
+        discreption: "Processor: Exynos W930 (Dualcore, 5nm) 1.4GHz,\n    Storage & Capcity: 2.0GB RAM + 16GB,\n    Connectivity: BT 5.3/ Wi-Fi 2.4GHz & 5GHz / GPS / NFC",
         price: 254,
         stock: 12
     },
     {
         url: "https://img.ksp.co.il/item/134985/b_1.jpg?v=1613399698",
         title: "2024 Legion Tower 7i Gen 8",
-        discreption: "Thomas Kosmela No. 4 - (Afra L'Amour) -\n          A scent of aromatic spices and amber.\n          The perfume has an innovative, airy and sweet scent profile with exceptional environmental effects and\n          long-lasting and long-lasting radiation.",
+        discreption: "Thomas Kosmela No. 4 - (Afra L'Amour) -\n    A scent of aromatic spices and amber.\n          The perfume has an innovative, airy and sweet scent profile with exceptional environmental effects and\n          long-lasting and long-lasting radiation.",
         price: 86,
         stock: 3
     },
@@ -31,7 +38,7 @@ var products = [
 //view func
 function htmlItem(item, index) {
     {
-        return "\n      <div class=\"card cardContainer__item\">\n        <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n\n        <i class=\"fa-solid fa-trash\"></i>\n        </button>\n        <button onclick=\"handleEdit(" + index + ")\" type=\"button\" class=\"btn btn-primary btn-sm editCardBtn\"  \n        style=\"position:absolute; \n        right:3rem; top:0.5rem;\" \n        data-bs-toggle=\"modal\" \n        data-bs-target=\"#exampleModal\">\n        <i class=\"fa fa-pencil-square fa-lg\" aria-hidden=\"true\"></i>\n        </button>\n      <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
+        return "\n    <div class=\"card cardContainer__item\">\n    <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n    \n    <i class=\"fa-solid fa-trash\"></i>\n    </button>\n    <button onclick=\"handleEdit(" + index + ")\" type=\"button\" class=\"btn btn-primary btn-sm editCardBtn\"  \n    style=\"position:absolute; \n    right:3rem; top:0.5rem;\" \n    data-bs-toggle=\"modal\" \n    data-bs-target=\"#exampleModal\">\n    <i class=\"fa fa-pencil-square fa-lg\" aria-hidden=\"true\"></i>\n    </button>\n    <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n    id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
             ? "fa-times-circle text-danger"
             : "fa-check-circle text-success") + "\"></i>In stock :" + item.stock + "</p>\n      </div>\n    </div>\n    ";
     }
@@ -49,14 +56,29 @@ function htmlItem(item, index) {
 //   }
 // }
 // Moudle - rearrange the data
+var isSorted = false;
+var isSortedStock = false;
+var sortedArry = __spreadArrays(products);
 function renderItems() {
     try {
         var itemRoot = document.getElementById("itemRoot");
         if (!itemRoot)
             throw new Error("there is nothing to render");
-        itemRoot.innerHTML = products
-            .map(function (item, index) { return htmlItem(item, index); })
-            .join("");
+        if (isSorted == true) {
+            itemRoot.innerHTML = sortedArry
+                .map(function (item, index) { return htmlItem(item, index); })
+                .join("");
+        }
+        else if (isSortedStock == true) {
+            itemRoot.innerHTML = sortedArry
+                .map(function (item, index) { return htmlItem(item, index); })
+                .join("");
+        }
+        else {
+            itemRoot.innerHTML = products
+                .map(function (item, index) { return htmlItem(item, index); })
+                .join("");
+        }
         addDeleteListeners();
     }
     catch (error) {
@@ -138,7 +160,6 @@ function handleEdit(index) {
     document.getElementById("editIndex").value =
         index.toString();
 }
-;
 ////////////////////////////////
 //     Theme btn function     //
 ////////////////////////////////
@@ -147,19 +168,36 @@ document.addEventListener("DOMContentLoaded", function () {
     var body = document.body;
     if (localStorage.getItem("theme") === "dark") {
         body.classList.toggle("dark-theme");
-        (themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.firstElementChild).className = "fa-solid fa-sun";
+        (themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.firstElementChild).className =
+            "fa-solid fa-sun";
     }
     themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.addEventListener("click", function () {
         body.classList.toggle("dark-theme");
         if (body.classList.contains("dark-theme")) {
-            themeToggleBtn.firstElementChild.className = "fa-solid fa-sun";
+            themeToggleBtn.firstElementChild.className =
+                "fa-solid fa-sun";
             localStorage.setItem("theme", "dark");
         }
         else {
-            themeToggleBtn.firstElementChild.className = "fa-solid fa-moon";
+            themeToggleBtn.firstElementChild.className =
+                "fa-solid fa-moon";
             localStorage.setItem("theme", "light");
         }
     });
 });
+// sort by price
+function handleSortByPrice() {
+    sortedArry.sort(function (a, b) { return a.price - b.price; });
+    console.log(sortedArry);
+    isSorted = true;
+    renderItems();
+}
+// sort by stock
+function handleSortByStock() {
+    sortedArry.sort(function (a, b) { return a.stock - b.stock; });
+    console.log(sortedArry);
+    isSortedStock = true;
+    renderItems();
+}
 // Allwayes call the render!
 renderItems();
