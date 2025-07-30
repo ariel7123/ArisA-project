@@ -46,14 +46,22 @@ const products: Product[] = [
 ];
 
 //view func
-function htmlItem(item: Product): string {
+function htmlItem(item: Product, index: number): string {
   {
     return `
       <div class="card cardContainer__item">
         <button class="btn btn-danger btn-sm deleteCardBtn" style="position:absolute; right:0.5rem; top:0.5rem;">
+
         <i class="fa-solid fa-trash"></i>
         </button>
-        <img src=${item.url} class="card-img-top" alt="..."
+        <button onclick="handleEdit(${index})" type="button" class="btn btn-primary btn-sm editCardBtn"  
+        style="position:absolute; 
+        right:3rem; top:0.5rem;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#exampleModal">
+        <i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
+        </button>
+      <img src=${item.url} class="card-img-top" alt="..."
         id="cardContainerItemImgUrl">
       <div class="card-body">
       <p class="card-text" id="cardContainerItemText">${item.title}</p>
@@ -93,8 +101,11 @@ function renderItems(): void {
     const itemRoot = document.getElementById("itemRoot");
     if (!itemRoot) throw new Error("there is nothing to render");
 
-    itemRoot.innerHTML = products.map(htmlItem).join("");
-    addDeleteListeners()
+    itemRoot.innerHTML = products
+      .map((item, index) => htmlItem(item, index))
+      .join("");
+
+    addDeleteListeners();
   } catch (error) {
     console.error("there is nothing to render", error);
   }
@@ -102,14 +113,13 @@ function renderItems(): void {
 
 // Control - but here we use addEvenetListner insted create event in the HTML file
 
-
 const form = document.getElementById("adminPanel__form") as HTMLFormElement;
 form.addEventListener("submit", (event: SubmitEvent) => {
   event.preventDefault();
   console.log("submit pressed");
-  
+
   const formData = new FormData(form);
-  
+
   const itemToAdd: Product = {
     url: formData.get("photourl") as string,
     title: formData.get("title") as string,
@@ -121,8 +131,8 @@ form.addEventListener("submit", (event: SubmitEvent) => {
   if (itemToAdd.stock == 0) {
     itemToAdd.stock = "out of stock";
   }
-  if(itemToAdd.price == 0 || isNaN(itemToAdd.price)){
-    alert("the price is not valid")
+  if (itemToAdd.price == 0 || isNaN(itemToAdd.price)) {
+    alert("the price is not valid");
     return;
   }
   products.push(itemToAdd);
@@ -130,23 +140,62 @@ form.addEventListener("submit", (event: SubmitEvent) => {
   // console.log(itemToAdd.price)
   renderItems();
   form.reset();
-}); 
-
-
+});
 
 ////////////////////////////////
 //     delete btn function    //
 ////////////////////////////////
 // delete btn control
 function addDeleteListeners() {
-  const deleteButtons = document.querySelectorAll(".deleteCardBtn")
-  
+  const deleteButtons = document.querySelectorAll(".deleteCardBtn");
+
   deleteButtons.forEach((btn, idx) => {
     btn.addEventListener("click", (e: Event) => {
-      e.preventDefault()
-      products.splice(idx, 1)
+      e.preventDefault();
+      products.splice(idx, 1);
       renderItems();
     });
+  });
+}
+////////////////////////////////
+//     edit btn functions    //
+////////////////////////////////
+const edit = document.getElementById("editForm") as HTMLFormElement;
+edit.addEventListener("submit", (event: SubmitEvent) => {
+  event.preventDefault();
+  const editData = new FormData(edit);
+  const index = parseInt(editData.get("index") as string);
+  const itemToEdit: Product = {
+    url: editData.get("photourl") as string,
+    title: editData.get("title") as string,
+    discreption: editData.get("discreption") as string,
+    price: parseInt(editData.get("price") as string),
+    stock: parseInt(editData.get("stock") as string),
+  };
+  console.log("itemToEdit")
+  products[index] = itemToEdit;
+  renderItems();
+  
+  
+
+});
+
+function handleEdit(index: number): void {
+  console.log(index);
+  const productToEdit = products[index];
+  (document.getElementById("inputUrl") as HTMLInputElement).value =
+    productToEdit.url;
+  (document.getElementById("inputTitle") as HTMLInputElement).value =
+    productToEdit.title;
+  (document.getElementById("inputDesc") as HTMLInputElement).value =
+    productToEdit.discreption;
+  (document.getElementById("inputPrice") as HTMLInputElement).value =
+    productToEdit.price.toString();
+  (document.getElementById("inputStock") as HTMLInputElement).value =
+    productToEdit.stock.toString();
+  (document.getElementById("editIndex") as HTMLInputElement).value =
+    index.toString();
+}
     
   });
 }

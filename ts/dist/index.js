@@ -29,9 +29,9 @@ var products = [
     },
 ];
 //view func
-function htmlItem(item) {
+function htmlItem(item, index) {
     {
-        return "\n      <div class=\"card cardContainer__item\">\n        <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n        <i class=\"fa-solid fa-trash\"></i>\n        </button>\n        <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
+        return "\n      <div class=\"card cardContainer__item\">\n        <button class=\"btn btn-danger btn-sm deleteCardBtn\" style=\"position:absolute; right:0.5rem; top:0.5rem;\">\n\n        <i class=\"fa-solid fa-trash\"></i>\n        </button>\n        <button onclick=\"handleEdit(" + index + ")\" type=\"button\" class=\"btn btn-primary btn-sm editCardBtn\"  \n        style=\"position:absolute; \n        right:3rem; top:0.5rem;\" \n        data-bs-toggle=\"modal\" \n        data-bs-target=\"#exampleModal\">\n        <i class=\"fa fa-pencil-square fa-lg\" aria-hidden=\"true\"></i>\n        </button>\n      <img src=" + item.url + " class=\"card-img-top\" alt=\"...\"\n        id=\"cardContainerItemImgUrl\">\n      <div class=\"card-body\">\n      <p class=\"card-text\" id=\"cardContainerItemText\">" + item.title + "</p>\n      <p class=\"card-text p-descripttion\" id=\"cardContainerItemdiscreption\">\n      <i class=\"fa-solid fa-file-lines\"></i>" + item.discreption + "</p>\n      <p class=\"card-text\" id=\"cardContainerItemPrice\">\n      <i class=\"fa-solid fa-dollar-sign\"></i>Price :" + item.price + "$</p>\n      <p class=\"card-text\" id=\"cardContainerItemStock\">\n      <i class=\"fa-solid \n      " + (item.stock == "out of stock"
             ? "fa-times-circle text-danger"
             : "fa-check-circle text-success") + "\"></i>In stock :" + item.stock + "</p>\n      </div>\n    </div>\n    ";
     }
@@ -54,7 +54,9 @@ function renderItems() {
         var itemRoot = document.getElementById("itemRoot");
         if (!itemRoot)
             throw new Error("there is nothing to render");
-        itemRoot.innerHTML = products.map(htmlItem).join("");
+        itemRoot.innerHTML = products
+            .map(function (item, index) { return htmlItem(item, index); })
+            .join("");
         addDeleteListeners();
     }
     catch (error) {
@@ -101,6 +103,42 @@ function addDeleteListeners() {
         });
     });
 }
+////////////////////////////////
+//     edit btn functions    //
+////////////////////////////////
+var edit = document.getElementById("editForm");
+edit.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var editData = new FormData(edit);
+    var index = parseInt(editData.get("index"));
+    var itemToEdit = {
+        url: editData.get("photourl"),
+        title: editData.get("title"),
+        discreption: editData.get("discreption"),
+        price: parseInt(editData.get("price")),
+        stock: parseInt(editData.get("stock"))
+    };
+    console.log("itemToEdit");
+    products[index] = itemToEdit;
+    renderItems();
+});
+function handleEdit(index) {
+    console.log(index);
+    var productToEdit = products[index];
+    document.getElementById("inputUrl").value =
+        productToEdit.url;
+    document.getElementById("inputTitle").value =
+        productToEdit.title;
+    document.getElementById("inputDesc").value =
+        productToEdit.discreption;
+    document.getElementById("inputPrice").value =
+        productToEdit.price.toString();
+    document.getElementById("inputStock").value =
+        productToEdit.stock.toString();
+    document.getElementById("editIndex").value =
+        index.toString();
+}
+;
 ////////////////////////////////
 //     Theme btn function     //
 ////////////////////////////////
